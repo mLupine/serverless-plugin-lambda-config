@@ -1,0 +1,19 @@
+{
+  "name": "serverless-plugin-lambda-config",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=14"
+  },
+  "description": "Serverless plugin that allows you to attach DLQs and configure invoke config on your AWS Lambda functions",
+  "main": "main.js",
+  "repository": "https://github.com/mLupine/serverless-plugin-lambda-config",
+  "author": "Maciej Wilczyński <maciej@lupine.software>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "serverless": "^2.60"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0"
+  }
+}
