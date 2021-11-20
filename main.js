@@ -28,7 +28,7 @@ class LambdaConfigPlugin {
 				lambdaConfig: {
 					type: "object",
 					properties: {
-						arn: { $ref: "#/definitions/awsArn" },
+						dlqArn: { $ref: "#/definitions/awsArn" },
 						invokeConfig: {
 							type: "object",
 							properties: {
@@ -61,12 +61,12 @@ class LambdaConfigPlugin {
 		let globalDLQArn = null;
 		let globalInvokeConfig = {};
 		if (globalPluginConfig) {
-			if (globalPluginConfig.arn) {
-				globalDLQArn = globalPluginConfig.arn;
+			if (globalPluginConfig.dlqArn) {
+				globalDLQArn = globalPluginConfig.dlqArn;
 			}
 
 			if (!globalDLQArn.startsWith("arn:aws:sqs:") && !globalDLQArn.startsWith("arn:aws:sns:")) {
-				this.throwError("lambdaConfig.arn must be an SQS queue or SNS topic ARN");
+				this.throwError("lambdaConfig.dlqArn must be an SQS queue or SNS topic ARN");
 				return;
 			}
 
@@ -85,16 +85,16 @@ class LambdaConfigPlugin {
 			let targetDLQArn = globalDLQArn;
 			let targetInvokeConfig = globalInvokeConfig;
 			if (functionPluginConfig) {
-				if (globalDLQArn && functionPluginConfig.arn !== undefined && !functionPluginConfig.arn) {
+				if (globalDLQArn && functionPluginConfig.dlqArn !== undefined && !functionPluginConfig.dlqArn) {
 					targetDLQArn = null;
 				} else if (
-					functionPluginConfig.arn
-					&& !functionPluginConfig.arn.startsWith("arn:aws:sqs:")
-					&& !functionPluginConfig.arn.startsWith("arn:aws:sns:")
+					functionPluginConfig.dlqArn
+					&& !functionPluginConfig.dlqArn.startsWith("arn:aws:sqs:")
+					&& !functionPluginConfig.dlqArn.startsWith("arn:aws:sns:")
 				) {
-					this.throwError(`${funcName}: lambdaConfig.arn must be an SQS queue or SNS topic ARN`);
-				} else if (functionPluginConfig.arn) {
-					targetDLQArn = functionPluginConfig.arn;
+					this.throwError(`${funcName}: lambdaConfig.dlqArn must be an SQS queue or SNS topic ARN`);
+				} else if (functionPluginConfig.dlqArn) {
+					targetDLQArn = functionPluginConfig.dlqArn;
 				}
 
 				const functionInvokeConfig = functionPluginConfig.invokeConfig || {};
