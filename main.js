@@ -138,7 +138,8 @@ class LambdaConfigPlugin {
 						MaximumEventAgeInSeconds: targetInvokeConfig.maxEventAge || undefined,
 						MaximumRetryAttempts: targetInvokeConfig.retryAttempts || undefined,
 						Qualifier: "$LATEST",
-					}
+					},
+					DependsOn: [resName],
 				};
 			}
 		}
